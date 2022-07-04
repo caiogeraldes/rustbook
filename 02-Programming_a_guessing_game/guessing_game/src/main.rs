@@ -7,12 +7,12 @@ fn main() {
 
     let secret_number = rand::thread_rng().gen_range(1..=100);
 
-    let mut tentativas = 0;
+    let mut tries = 0;
 
     // Início do loop
     //
     loop {
-        tentativas += 1;
+        tries += 1;
         println!("Dê seu chute!");
 
         // Criação de uma variável para receber
@@ -33,7 +33,13 @@ fn main() {
         // armazenada em guess. Como guess é mutável,
         // podemos utilizar o mesmo nome de variável
         // para a nossa u32.
-        let guess: u32 = guess.trim().parse().expect("Por favor, um número, cavalo!");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Por favor, um número, seu cavalo!");
+                continue;
+            }
+        };
 
         match guess.cmp(&secret_number) {
             Ordering::Less => println!("Baixo demais!"),
@@ -48,5 +54,5 @@ fn main() {
         }
     }
 
-    println!("Você demorou {tentativas} tentativas para acertar!");
+    println!("Você demorou {tries} tentativas para acertar!");
 }
