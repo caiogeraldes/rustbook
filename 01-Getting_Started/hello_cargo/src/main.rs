@@ -24,6 +24,24 @@
 // # Olar, Cargo!
 // #
 //
+// Essa mesma estrutura teria sido criada com o comando:
+//
+// $ cargo build
+//
+// Para realizar optmizações e gerar o executável para distribuição,
+// deve-se rodar:
+//
+// $ cargo build --release
+//
+// Este comando adiciona à pasta target uma pasta release
+//
+// hello_cargo --- src --- main.rs
+//              |- target --- CACHEDIR.TAG
+//              |          |- debug/...
+//              |          |- release/...
+//              |- Cargo.lock
+//              |- Cargo.toml
+//
 fn main() {
     println!("Olar, Cargo!");
 }
