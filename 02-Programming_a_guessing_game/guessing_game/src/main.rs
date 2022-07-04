@@ -5,9 +5,9 @@ use std::io;
 fn main() {
     println!("Adivinhe o número!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let secret_number: u8 = rand::thread_rng().gen_range(1..=100);
 
-    let mut tries = 0;
+    let mut tries: u8 = 0;
 
     // Início do loop
     //
@@ -29,11 +29,34 @@ fn main() {
             .expect("Eita, algo deu errado!");
 
         // É necessário criar uma variável do tipo
-        // u32 para acomodar a forma numérica da String
+        // u8 para acomodar a forma numérica da String
         // armazenada em guess. Como guess é mutável,
         // podemos utilizar o mesmo nome de variável
-        // para a nossa u32.
-        let guess: u32 = match guess.trim().parse() {
+        // para a nossa u8.
+        //
+        // Para  isso, é necessário realizar algumas
+        // operações sobre guess (String):
+        // - trim(): elimina espaços em branco no começo
+        //      ou fim da linha do standard input.
+        // - parse(): converte uma string em outro tipo
+        //      que pode ser declarado no ato de instanciar
+        //      uma variável de tipo X. Assim, quando
+        //      passamos u8 no let-statement, parse()
+        //      sabe que deve converter a string para
+        //      unsigned integer de 8 bits.
+        //
+        // Ao invés de utilizar .expect("mensagem") após
+        // parse para lidar com erros, o que faria o
+        // programa romper após o erro, o que pareceria com:
+        //
+        // let guess: u8 = guess.trim().parse().expect("a!")
+        //
+        // , utiliza-se um match statement que avalia se o
+        // objeto Result retornado por parse() é da variante
+        // Ok ou Err. Caso Ok, retorna-se o num contido em
+        // Ok, caso o contrário, se imprime uma mensagem de
+        // erro e se comanda a continuidade do loop.
+        let guess: u8 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
                 println!("Por favor, um número, seu cavalo!");
